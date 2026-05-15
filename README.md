@@ -1,60 +1,33 @@
-# llmu-analysis
+# Beyond Forgetting: Machine Unlearning Elicits Controllable Side Behaviors and Capabilities
 
-Utilities and experiments for machine unlearning analysis, including baseline evaluations, RM (RAB/RAD) unlearning methods, QA generation/grammar checks, and knowledge recovery attacks.
+## Abstract
+
+*We consider Representation Misdirection (RM), a class of large language model (LLM) unlearning methods that achieve forgetting by redirecting the forget-representations, that is, latent representations of forget-samples, toward a target vector. Despite being important, the roles of the target vector used in RM, however, remain underexplored. Here, we approach and revisit RM through the lens of the Linear Representation Hypothesis. Specifically, if one can identify a one-dimensional representation corresponding to a high-level concept, the Linear Representation Hypothesis enables linear operations on this concept vector within the forget-representation space. Under this view, we hypothesize that, beyond forgetting, machine unlearning via RM elicits controllable emergent side behaviors and stronger side capabilities corresponding to the high-level concept. Our hypothesis is empirically validated across a wide range of tasks, including behavioral control (e.g., controlling unlearned models' truthfulness, sentiment, refusal, and language) and capability enhancement (e.g., improving unlearned models' in-context learning (ICL) capability). Our findings reveal that this phenomenon could be either a hidden risk if misused or a mechanism that can be harnessed for developing unlearned models that require stronger capabilities and controllable behaviors.*
 
 ## What’s inside
-- `baselines/`: evaluation baselines (factual QA, GSM8K, HellaSwag, refusal, TruthfulQA) and RM unlearning methods.
-- `experiments/`: ready-to-run scripts for common workflows.
-- `utils/`: QA generation, probes, grammar checks, and helpers.
-- `knowledge_recovery_attacks/`: attack implementations and scripts.
-- `outputs/`: collected results from experiments.
 
-## Quickstart
+- [`baselines/`](./baselines/): implementations of RAd and RAb & concept vector extraction.
+- [`knowledge_recovery_attacks/`](./knowledge_recovery_attacks/): implementations and scripts of knowledge recovery attacks.
+- [`utils/`](./utils/): implementations of language control and models' outputs analysis.
+- [`experiments/`](./experiments/): scripts for running experiments.
 
-### 1) Create environments
+## Setup
 
-**Knowledge Recovery Attacks (general):**
+To set up the environment for Unlearning, run:
 ```bash
-cd knowledge_recovery_attacks
-conda env create -f [env.yml](http://_vscodecontentref_/4)
+conda create -n unlearning python=3.13
+conda activate unlearning
+pip install -r requirements.txt
 ```
 
-**Set-Difference Pruning (separate env):**
+For Knowledge Recovery Attacks, refer to [knowledge_recovery_attacks/](./knowledge_recovery_attacks/).
 
+## Running experiments
+
+Refer to [experiments/](./experiments/) for scripts to run experiments.
+
+An example of running RAd w/ truth:
 ```bash
-cd knowledge_recovery_attacks/src/set_difference_pruning
-conda env create -f env_prune_llm.yml
-```
-
-## Running Baseline/Utility Scripts
-All commands below are from the repo root:
-
-Generate HellaSwag responses:
-```bash
-bash [generate_hellaswag.sh](http://_vscodecontentref_/5)
-```
-
-Extract concept vectors (probes):
-```bash
-bash [vary_probes.sh](http://_vscodecontentref_/6)
-```
-
-Generate QA + grammar checks (WMDP):
-```bash
-bash [check_grammar.sh](http://_vscodecontentref_/7)
-```
-
-Run RAD unlearning (example sweep):
-```bash
-bash [rad.sh](http://_vscodecontentref_/8)
-```
-
-Knowledge Recovery Attacks
-
-All attack code and scripts are under knowledge_recovery_attacks/.
-
-Example: Logit Lens attack
-```bash
-cd knowledge_recovery_attacks
-bash scripts/run_logit_lens.sh
+bash experiments/extract_truth_vector.sh
+bash experiments/rm/rad.sh
 ```

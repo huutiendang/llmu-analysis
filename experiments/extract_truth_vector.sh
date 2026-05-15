@@ -1,0 +1,1 @@
+python -m baselines.truthfulqa

@@ -2,9 +2,9 @@ for SEED in 42
 do
     for ALPHA in 20
     do
-        for DIRECTION in random
+        for DIRECTION in truth
         do
-            for COEFFS in 60
+            for COEFFS in 50
             do
                 for BATCH in 500
                 do
